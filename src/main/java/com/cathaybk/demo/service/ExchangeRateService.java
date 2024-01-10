@@ -40,11 +40,12 @@ public class ExchangeRateService {
   private final RestTemplate restTemplate = new RestTemplate();
   private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
   private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+  
+  private final ObjectMapper objectMapper;
 
   public void getDataAndSave() {
     var res = restTemplate.getForEntity(GET_CURRENCY_URL, String.class);
     String body = res.getBody();
-    ObjectMapper objectMapper = new ObjectMapper();
     List<Map<String, String>> dtoList;
     try {
       String today = sdf2.format(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000));

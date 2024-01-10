@@ -16,4 +16,4 @@ public class UnitTest {
   public void test() throws Exception {
     exchangeRateService.getDataAndSave();
   }
-  }
+}
