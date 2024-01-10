@@ -42,8 +42,6 @@ public class ExchangeRateService {
   private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
   private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
 
-  @Scheduled( /** 每天18:00一次 */
-      cron = "0 0 18 * * ?")
   public void getDataAndSave() {
     var res = restTemplate.getForEntity(GET_CURRENCY_URL, String.class);
     String body = res.getBody();
