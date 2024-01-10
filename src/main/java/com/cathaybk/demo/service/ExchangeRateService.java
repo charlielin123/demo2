@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.cathaybk.demo.dao.ExchangeRateDAO;
@@ -25,7 +26,6 @@ import com.cathaybk.demo.vo.CurrencyVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mchange.v2.lang.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -95,8 +95,8 @@ public class ExchangeRateService {
 
   private void checkReq(GetByDateRangeReq req) throws WrongDateException, RequsetMissingParemException {
     String regex = "^[\\d]{4}/(0[1-9]|1[0-2])/(0[1-9]|[1-2][\\d]|3[0-1])$";
-    if (!StringUtils.nonWhitespaceString(req.getStartDate()) || !StringUtils.nonWhitespaceString(req.getEndDate())
-        || !StringUtils.nonWhitespaceString(req.getCurrency())) {
+    if (!StringUtils.hasText(req.getStartDate()) || !StringUtils.hasText(req.getEndDate())
+        || !StringUtils.hasText(req.getCurrency())) {
       throw new RequsetMissingParemException();
     }
     if (!req.getStartDate().matches(regex) || !req.getEndDate().matches(regex)) {
