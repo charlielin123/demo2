@@ -14,7 +14,7 @@ import com.cathaybk.demo.jobs.QuartzTask;
 public class QuartzConfigration {
 
   @Bean(name = "scheduler")
-  public SchedulerFactoryBean schedulerFactory(Trigger... triggers) {
+  SchedulerFactoryBean schedulerFactory(Trigger... triggers) {
     SchedulerFactoryBean bean = new SchedulerFactoryBean();
     bean.setOverwriteExistingJobs(true);
     bean.setStartupDelay(1);
@@ -23,7 +23,7 @@ public class QuartzConfigration {
   }
 
   @Bean(name = "getCurrencyAndSave") 
-  public MethodInvokingJobDetailFactoryBean jobDetail(QuartzTask task) {
+  MethodInvokingJobDetailFactoryBean jobDetail(QuartzTask task) {
     MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
     jobDetail.setConcurrent(false);
     jobDetail.setTargetObject(task);
@@ -32,9 +32,9 @@ public class QuartzConfigration {
   }
 
   @Bean
-  public CronTriggerFactoryBean jobTrigger(JobDetail getCurrencyAndSave) {
+  CronTriggerFactoryBean jobTrigger(JobDetail getCurrencyAndSave) {
     // 每天 18:00執行
-    String cron = "0 00 18 * * ? *";
+    String cron = "0 0 18 * * ?";
     CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
     trigger.setJobDetail(getCurrencyAndSave); 
     trigger.setCronExpression(cron);

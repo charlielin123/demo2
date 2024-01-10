@@ -2,7 +2,6 @@ package com.cathaybk.demo;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import com.cathaybk.demo.pojo.exchangeRate.GetByDateRangeReq;
 import com.cathaybk.demo.vo.CurrencyVo;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;

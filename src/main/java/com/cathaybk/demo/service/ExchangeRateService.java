@@ -23,6 +23,7 @@ import com.cathaybk.demo.pojo.exchangeRate.GetByDateRangeReq;
 import com.cathaybk.demo.vo.CurrencyVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mchange.v2.lang.StringUtils;
 
@@ -40,26 +41,24 @@ public class ExchangeRateService {
   private final RestTemplate restTemplate = new RestTemplate();
   private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
   private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
-  
+
   private final ObjectMapper objectMapper;
 
-  public void getDataAndSave() {
+  public void getDataAndSave() throws JsonMappingException, JsonProcessingException {
     var res = restTemplate.getForEntity(GET_CURRENCY_URL, String.class);
     String body = res.getBody();
     List<Map<String, String>> dtoList;
-    try {
-      String today = sdf2.format(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000));
-      dtoList = objectMapper.readValue(body, new TypeReference<List<Map<String, String>>>() {
-      });
-      dtoList = dtoList.stream().filter(dto -> dto.get("Date").equals(today)).collect(Collectors.toList());
-      List<ExchangeRate> currencyDataList = new ArrayList<>();
-      dtoList.forEach(data -> {
-        currencyDataList.addAll(convert(data));
-      });
-      exchangeRateDAO.saveAll(currencyDataList);
-    } catch (JsonProcessingException e) {
-      log.error(e.getMessage(), e);
-    }
+
+    String today = sdf2.format(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000));
+    dtoList = objectMapper.readValue(body, new TypeReference<List<Map<String, String>>>() {
+    });
+    dtoList = dtoList.stream().filter(dto -> dto.get("Date").equals(today)).collect(Collectors.toList());
+    List<ExchangeRate> currencyDataList = new ArrayList<>();
+    dtoList.forEach(data -> {
+      currencyDataList.addAll(convert(data));
+    });
+    exchangeRateDAO.saveAll(currencyDataList);
+
   }
 
   public CurrencyVo getByDateRange(GetByDateRangeReq req) throws Exception {
