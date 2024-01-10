@@ -25,8 +25,7 @@ public class GlobalRestExceptionHandler {
 
     for (var c : ExcertionEnum.values()) {
       if (ex.getClass() == c.getException()) {
-        vo.getError().setCode(c.getErrorCode());
-        vo.getError().setMessage(c.getMessage());
+        code=c.getErrorCode();
         message = Objects.isNull(c.getMessage()) ? message : c.getMessage();
       }
     }
