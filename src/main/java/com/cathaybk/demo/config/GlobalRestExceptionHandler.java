@@ -34,7 +34,7 @@ public class GlobalRestExceptionHandler {
 
     vo.getError().setCode(code);
     vo.getError().setMessage(message);
-    return ResponseEntity.badRequest().body(vo);
+    return ResponseEntity.ok().body(vo);
   }
 
   @ExceptionHandler(Throwable.class)
@@ -44,7 +44,7 @@ public class GlobalRestExceptionHandler {
     BaseVo vo = new BaseVo();
     vo.getError().setCode("EXXXX");
     vo.getError().setMessage("請聯繫系統管理員");
-    return ResponseEntity.badRequest().body(vo);
+    return ResponseEntity.ok().body(vo);
   }
 
 }
